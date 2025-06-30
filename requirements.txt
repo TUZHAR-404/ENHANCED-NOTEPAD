@@ -1,0 +1,6 @@
+customtkinter
+pyttsx3
+pyaudio
+SpeechRecognition
+numpy
+matplotlib
