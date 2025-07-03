@@ -1,45 +1,35 @@
+import numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 from matplotlib.animation import FuncAnimation
-import numpy as np
-import customtkinter as ctk
 
 class Visualization:
     def __init__(self, parent_frame):
+        self.parent_frame = parent_frame
         self.visualization_active = False
         self.animation = None
-        self.parent_frame = parent_frame
-        self.fig = None
-        self.ax = None
-        self.sphere = None
 
     def create_3d_visualization(self):
         if self.visualization_active:
             return
 
         self.visualization_active = True
-        self.visualization_frame = ctk.CTkFrame(self.parent_frame)
-        self.visualization_frame.pack(expand=True, fill="both", padx=5, pady=5)
-
         self.fig = Figure(figsize=(5, 4), dpi=100)
         self.ax = self.fig.add_subplot(111, projection='3d')
 
         u = np.linspace(0, 2 * np.pi, 100)
         v = np.linspace(0, np.pi, 100)
-        self.x = np.outer(np.cos(u), np.sin(v))
-        self.y = np.outer(np.sin(u), np.sin(v))
-        self.z = np.outer(np.ones(np.size(u)), np.cos(v))
+        x = np.outer(np.cos(u), np.sin(v))
+        y = np.outer(np.sin(u), np.sin(v))
+        z = np.outer(np.ones(np.size(u)), np.cos(v))
 
         self.sphere = self.ax.plot_surface(
-            self.x, self.y, self.z,
-            facecolors=self.calculate_rgb_colors(self.x, self.y, self.z),
+            x, y, z,
+            facecolors=self.calculate_rgb_colors(x, y, z),
             rstride=4, cstride=4, shade=False
         )
         self.ax.set_axis_off()
-        self.ax.set_xlim([-1.5, 1.5])
-        self.ax.set_ylim([-1.5, 1.5])
-        self.ax.set_zlim([-1.5, 1.5])
-        self.canvas = FigureCanvasTkAgg(self.fig, master=self.visualization_frame)
+        self.canvas = FigureCanvasTkAgg(self.fig, master=self.parent_frame)
         self.canvas.draw()
         self.canvas.get_tk_widget().pack(expand=True, fill="both")
 
@@ -66,7 +56,6 @@ class Visualization:
             facecolors=self.calculate_rgb_colors(x_new, y_new, z_new),
             rstride=4, cstride=4, shade=False
         )
-
         return self.sphere,
 
     def remove_3d_visualization(self):
@@ -75,9 +64,5 @@ class Visualization:
 
         if self.animation:
             self.animation.event_source.stop()
-
-        if hasattr(self, 'visualization_frame'):
-            self.visualization_frame.destroy()
-            del self.visualization_frame
 
         self.visualization_active = False

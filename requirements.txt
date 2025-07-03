@@ -1,3 +1,4 @@
+thinkter
 customtkinter
 pyttsx3
 pyaudio

@@ -1,0 +1,18 @@
+enhanced_notepad/
+├── app.py                # Entry point for the application
+├── README.md             # Project documentation
+├── requirements.txt      # Dependencies
+├── constants.py          # Constants used across the project
+├── gui/                  # GUI-related components
+│   ├── __init__.py       # Initialize the GUI module
+│   ├── main_gui.py       # Main GUI logic
+│   ├── settings_gui.py   # Audio settings GUI logic
+├── audio/                # Audio-related functionality
+│   ├── __init__.py       # Initialize the audio module
+│   ├── voice_module.py   # Speech-to-text & Text-to-speech logic
+│   ├── visualization.py  # 3D visualization logic
+├── utils/                # Utility functions
+│   ├── __init__.py       # Initialize the utils module
+│   ├── file_operations.py # File operations (open, save, etc.)
+│   ├── settings.py       # Settings management
+│   ├── text_operations.py # Text operations (cut, copy, paste)
